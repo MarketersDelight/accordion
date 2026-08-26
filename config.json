@@ -1,0 +1,11 @@
+{
+  "name": "Accordion",
+  "author": "Alex, Kolakube",
+  "version": "1.0.0",
+  "description": "Organize taxonomy posts into a nested accordion navigation widget.",
+  "dropin_url": "https://marketersdelight.com/dropins/accordion/",
+  "settings_url": "widgets.php",
+  "author_url": "https://marketersdelight.com/",
+  "icon": "dashicons-list-view",
+  "colors": "#3923ff, #FFFFFF"
+}
