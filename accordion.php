@@ -3,10 +3,13 @@
  * Drop-in Name: Accordion
  * Description: Organize taxonomy posts into a nested accordion navigation widget.
  * Author: Alex, Kolakube
- * AuthorURI: https://marketersdelight.com/
- * DropinURI: https://marketersdelight.com/dropins/accordion/
- * Slug: accordion
+ * Author URI: https://marketersdelight.com/
+ * Drop-in URI: https://marketersdelight.com/dropins/accordion/
+ * Drop-in Slug: accordion
+ * Text Domain: md-accordion
  * Version: 1.0.0
+ * Requires at least: 6.6
+ * Requires PHP: 7.4
  */
 
 class md_accordion extends md_api {

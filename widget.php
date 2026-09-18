@@ -19,14 +19,14 @@ class md_accordion_widget extends WP_Widget {
 
 	public function __construct() {
 		$this->terms_order = array(
-			'count' => __( 'Posts count', 'md' ),
-			'slug' => __( 'Slug', 'md' ),
-			'id' => __( 'Category ID', 'md' ),
-			'term_order' => __( 'Category Order', 'md' )
+			'count' => __( 'Posts count', 'md-accordion' ),
+			'slug' => __( 'Slug', 'md-accordion' ),
+			'id' => __( 'Category ID', 'md-accordion' ),
+			'term_order' => __( 'Category Order', 'md-accordion' )
 		);
 
-		parent::__construct( 'md_accordion_widget', __( 'MD &rarr; Accordion Nav', 'md' ), array(
-			'description' => __( 'List category links in a highly organized accordion widget.', 'md' ),
+		parent::__construct( 'md_accordion_widget', __( 'MD &rarr; Accordion Nav', 'md-accordion' ), array(
+			'description' => __( 'List category links in a highly organized accordion widget.', 'md-accordion' ),
 			'customize_selective_refresh' => true
 		) );
 	}
@@ -294,7 +294,7 @@ class md_accordion_widget extends WP_Widget {
 			$count = ! empty( $data['filter_post_ids'] ) ? ( $data['counts_by_term'][$term->term_id] ?? 0 ) : $term->count;
 			$see_more = ! empty( $val['see_more'] )
 				? strtr( $val['see_more'], array( '{count}' => $count, '{category}' => $term->name ) )
-				: sprintf( __( 'See more in %s &rarr;', 'md' ), "<strong>$term->name</strong>" );
+				: sprintf( __( 'See more in %s &rarr;', 'md-accordion' ), "<strong>$term->name</strong>" );
 
 			$in_path = $term->term_id === $data['current_term_id'] || isset( $data['current_ancestors'][$term->term_id] );
 			$open = $c === 1 && ! empty( $val['settings']['open'] ) && ( $depth === 1 || $in_path ) ? ' open' : '';
