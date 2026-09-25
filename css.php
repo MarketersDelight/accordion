@@ -25,6 +25,8 @@
 	padding: var(--md-half);
 }
 
+.accordion.box-group { padding: 0; }
+
 .accordion-title::marker { content: none; }
 
 .accordion-title:after { content: '\e80e'; }
