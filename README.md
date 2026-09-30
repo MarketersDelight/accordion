@@ -40,7 +40,7 @@ All settings are in the widget form (Appearance → Widgets):
 The Accordion widget shipped inside the Marketers Delight theme from MD 5.2 until it moved to this drop-in.
 
 - Marketers Delight 6.0 or later
-- WordPress 6.6 or later
+- WordPress 6.2 or later
 - PHP 7.4 or later
 
 ## Install
