@@ -19,10 +19,10 @@
 	color: var(--md-sidebar-title);
 	cursor: pointer;
 	display: flex;
-	font-size: var(--md-h6);
+	font-size: var(--md-font-size-small);
 	font-weight: var(--md-bold);
-	line-height: var(--md-h6-line-height);
-	padding: var(--md-half);
+	line-height: var(--md-line-height-small);
+	padding: var(--md-third);
 }
 
 .accordion.box-group { padding: 0; }
