@@ -38,6 +38,12 @@
     <input type="number" id="<?php echo $this->get_field_id( 'posts_per_category' ); ?>" name="<?php echo $this->get_field_name( 'posts_per_category' ); ?>" value="<?php echo esc_attr( $val['posts_per_category'] ); ?>" class="widefat" placeholder="5" style="width: 25%;" />
 </p>
 
+<p>
+    <label for="<?php echo $this->get_field_id( 'terms_limit' ); ?>"><?php echo __( 'Categories to show', 'md-accordion' ); ?>:</label><br />
+    <input type="number" id="<?php echo $this->get_field_id( 'terms_limit' ); ?>" name="<?php echo $this->get_field_name( 'terms_limit' ); ?>" value="<?php echo esc_attr( $val['terms_limit'] ); ?>" class="widefat" style="width: 25%;" /><br />
+    <span><?php echo __( 'Leave empty to show every category. When there are more, a See all link follows the list.', 'md-accordion' ); ?></span>
+</p>
+
 <div>
     <label for="<?php echo $this->get_field_id( 'exclude' ); ?>"><?php echo __( 'Exclude', 'md-accordion' ); ?>:</label>
     <p><input type="text" id="<?php echo $this->get_field_id( 'exclude' ); ?>" name="<?php echo $this->get_field_name( 'exclude' ); ?>" value="<?php echo esc_attr( $val['exclude'] ); ?>" placeholder="23, 45, 345" class="widefat" /></p>
@@ -46,29 +52,17 @@
 
 <hr />
 
-<p style="margin-bottom: 5px;"><strong><?php echo __( 'Post filter', 'md-accordion' ); ?></strong></p>
-
-<p style="margin-top: 0; font-style: italic;"><?php echo __( 'Advanced: you can filter posts to only show posts that have matching categories across post types.', 'md-accordion' ); ?></p>
-
-<div class="md-auto-filter-manual" style="<?php echo ! empty( $val['auto_filter'] ) ? 'display: none;' : ''; ?>">
-    <label for="<?php echo $this->get_field_id( 'filter_term' ); ?>"><?php echo __( 'Enter category ID', 'md-accordion' ); ?>:</label>
-    <p><input type="number" id="<?php echo $this->get_field_id( 'filter_term' ); ?>" name="<?php echo $this->get_field_name( 'filter_term' ); ?>" value="<?php echo esc_attr( $val['filter_term'] ); ?>" style="width: 25%;" /></p>
-</div>
-
-<p class="md-auto-filter-taxonomy" style="<?php echo empty( $val['auto_filter'] ) ? 'display: none' : ''; ?>;">
+<p>
+    <label for="<?php echo $this->get_field_id( 'filter_taxonomy' ); ?>"><?php echo __( 'Only show posts that share the page\'s', 'md-accordion' ); ?>:</label><br />
     <select id="<?php echo $this->get_field_id( 'filter_taxonomy' ); ?>" name="<?php echo $this->get_field_name( 'filter_taxonomy' ); ?>">
-        <option value=""><?php echo __( 'Select taxonomy', 'md-accordion' ); ?></option>
-        <?php foreach ( $taxonomies as $tax_slug => $tax_slug ) :
+        <option value=""><?php echo __( 'Off', 'md-accordion' ); ?></option>
+        <?php foreach ( $taxonomies as $tax_slug ) :
             $filter_taxonomy = get_taxonomy( $tax_slug );
         ?>
-        <option value="<?php echo esc_attr( $tax_slug ); ?>"<?php echo selected( $val['filter_taxonomy'], $tax_slug, false ); ?>><?php echo esc_html( $filter_taxonomy->labels->singular_name ); ?></option>
+        <option value="<?php echo esc_attr( $tax_slug ); ?>"<?php echo selected( ! empty( $val['auto_filter'] ) ? $val['filter_taxonomy'] : '', $tax_slug, false ); ?>><?php echo esc_html( $filter_taxonomy->labels->singular_name ); ?></option>
         <?php endforeach; ?>
-    </select>
-</p>
-
-<p>
-    <input type="checkbox" id="<?php echo $this->get_field_id( 'auto_filter' ); ?>" name="<?php echo $this->get_field_name( 'auto_filter' ); ?>" value="1"<?php checked( $val['auto_filter'], '1' ); ?> class="md-auto-filter-toggle" />
-    <label for="<?php echo $this->get_field_id( 'auto_filter' ); ?>"><?php echo __( 'Auto-detect from taxonomy', 'md-accordion' ); ?></label>
+    </select><br />
+    <span><?php echo __( 'For example, list only the docs that share a product page\'s category. Every matching post shows, and a lone category opens.', 'md-accordion' ); ?></span>
 </p>
 
 <hr />
@@ -77,7 +71,7 @@
 
 <p>
     <input type="checkbox" id="<?php echo $this->get_field_id( 'settings_open' ); ?>" name="<?php echo $this->get_field_name( 'settings' ); ?>[open]" value="1"<?php checked( ! empty( $val['settings']['open'] ), true ); ?> />
-    <label for="<?php echo $this->get_field_id( 'settings_open' ); ?>"><?php echo __( 'Open first item by default', 'md-accordion' ); ?></label>
+    <label for="<?php echo $this->get_field_id( 'settings_open' ); ?>"><?php echo __( 'Open the current page\'s category', 'md-accordion' ); ?></label>
 </p>
 
 <p>
@@ -100,24 +94,3 @@
     <label for="<?php echo $this->get_field_id( 'classes' ); ?>"><?php echo __( 'CSS classes', 'md-accordion' ); ?>:</label><br />
     <input type="text" id="<?php echo $this->get_field_id( 'classes' ); ?>" name="<?php echo $this->get_field_name( 'classes' ); ?>" value="<?php echo esc_attr( $val['classes'] ); ?>" class="widefat" placeholder="my-class another-class" />
 </p>
-
-<script>
-( function( $ ) {
-    function syncAutoFilter( checkbox ) {
-        var scope = checkbox.closest( '.widget-content, form' ),
-            checked = checkbox.is( ':checked' );
-        scope.find( '.md-auto-filter-taxonomy' ).toggle( checked );
-        scope.find( '.md-auto-filter-manual' ).toggle( ! checked );
-    }
-
-    $( document )
-        .on( 'change', '.md-auto-filter-toggle', function() {
-            syncAutoFilter( $( this ) );
-        } )
-        .on( 'widget-added widget-updated', function( e, widget ) {
-            widget.find( '.md-auto-filter-toggle' ).each( function() {
-                syncAutoFilter( $( this ) );
-            } );
-        } );
-} )( jQuery );
-</script>
